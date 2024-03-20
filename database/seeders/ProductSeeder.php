@@ -16,15 +16,18 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert([
             [
                 'id' => 1,
-                'room_type' => 'Single', // Contoh tipe kamar
+                'name' => 'Single type room',
+                'price'=> 10000,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ], [
+                'hotel_id' => 1
+            ], /* [
                 'id' => 2,
-                'room_type' => 'double', // Contoh tipe kamar
+                'name' => 'double type room',
+                'price'=> 20000,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ] */
         ]);
     }
 }

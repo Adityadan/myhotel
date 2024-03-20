@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HotelController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,3 +38,6 @@ Route::get('/promo/{promo}', function ($promo='Promo-Ramadhan') {
     return 'hotel bintang 5 yang sangat populer di nusa tengara barat';
 });
 
+
+Route::resource('hotels',HotelController::class);
+Route::resource('products',ProductController::class);

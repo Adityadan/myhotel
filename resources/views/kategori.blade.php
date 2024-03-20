@@ -77,10 +77,10 @@ section {
     <div class="room">
         <div class="image">
             <!-- Gambar kamar hotel -->
-            
+
         </div>
     </div>
-    
+
         <nav>
             <ul>
                 <li>
@@ -101,10 +101,10 @@ section {
             </ul>
         </nav>
     </header>
-   
-    
+
+
     <section>
-        
+
     </section>
 </body>
 </html>

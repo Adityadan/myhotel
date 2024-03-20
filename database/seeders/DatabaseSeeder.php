@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             TypeSeeder::class,
-            ProductSeeder::class,
             HotelSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

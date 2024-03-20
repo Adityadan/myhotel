@@ -31,7 +31,6 @@ class HotelSeeder extends Seeder
             'category' => Str::random(10),
             'web' => 'https://www.example.com',
             'type_id'=>1,
-            'product_id'=>1,
         ]);
 
     }

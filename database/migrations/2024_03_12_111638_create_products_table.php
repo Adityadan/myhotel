@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('room_type');
+            $table->string('name');
+            $table->integer('price');
+            $table->unsignedBigInteger('hotel_id');
+            $table->foreign('hotel_id')->references('id')->on('hotels');
             $table->timestamps();
         });
     }
