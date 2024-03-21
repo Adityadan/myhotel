@@ -14,7 +14,7 @@ class HotelController extends Controller
     public function index()
     {
         //pake raw query
-       // $rs=DB::select("select * from hotels ");
+        // $rs=DB::select("select * from hotels ");
         //pake querybuilder
         //$rs=DB::table("hotels")
         //      ->where('name','like','%nor%')
@@ -23,8 +23,8 @@ class HotelController extends Controller
         //pake model
         //$rs=Hotel::where('name','like','%nor%')->get();
         //$rs=Hotel::all();
-        $rs=Hotel::orderBy('name','asc')->get();
-       // dd($rs);
+        $rs = Hotel::orderBy('name', 'asc')->get();
+        // dd($rs);
 
         //$rs=DB::table("hotels")
         //            ->selectRaw('city,count(id) as jumlah')
@@ -36,7 +36,7 @@ class HotelController extends Controller
         //dd($rs);
         //$jum=DB::table("hotels")->count();
         //echo $jum;
-        return view('hotel.index',compact('rs'));
+        return view('hotel.index', compact('rs'));
 
         //return view('hotel.index',['rs'=>$rs]);
 
@@ -87,5 +87,26 @@ class HotelController extends Controller
     public function destroy(Hotel $hotel)
     {
         //
+    }
+
+    public function availableHotelRooms()
+    {
+        $rs = Hotel::join('products as p', 'hotels.id', '=', 'p.hotel_id')
+            ->select('hotels.id', 'hotels.name', DB::raw('sum(p.available_room) as room'))
+            ->groupBy('hotels.id', 'hotels.name')
+            ->get();
+
+        return view('hotel.availableRoom', compact('rs'));
+    }
+
+    function avgPriceByHotelType()
+    {
+        $rs = DB::table('hotels')
+            ->leftJoin('products', 'hotels.id', '=', 'products.hotel_id')
+            ->leftJoin('types', 'hotels.type_id', '=', 'types.id')
+            ->select('hotels.id', 'hotels.name', 'types.name as type', DB::raw('AVG(products.price) as avg_price'))
+            ->groupBy('hotels.id', 'hotels.name', 'types.name')
+            ->get();
+        return view('hotel.avgPriceByHotelType', compact('rs'));
     }
 }

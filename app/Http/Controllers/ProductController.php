@@ -31,15 +31,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(String $id)
     {
-        //
+        $rs = Product::with('hotel')->find($id);
+
+        return view('product.show', compact('rs'));
     }
 
     /**

@@ -41,3 +41,7 @@ Route::get('/promo/{promo}', function ($promo='Promo-Ramadhan') {
 
 Route::resource('hotels',HotelController::class);
 Route::resource('products',ProductController::class);
+
+Route::get('report/availableHotelRooms',[HotelController::class,'availableHotelRooms'])->name('reportShowHotel');
+Route::get('report/avgPriceByHotelType', [HotelController::class,'avgPriceByHotelType'])->name('avgPriceByHotelType');
+
