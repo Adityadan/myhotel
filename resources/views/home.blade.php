@@ -54,11 +54,16 @@
         <nav>
             <ul>
                 <p>MENU</p>
-                <li><a href="http://127.0.0.1:8000/kategori">Kategori</a></li>
-                <li><a href="http://127.0.0.1:8000/hotel">Hotel</a></li>
+                {{-- <li><a href="http://127.0.0.1:8000/kategori">Kategori</a></li>
+                <li><a href="http://127.0.0.1:8000/hotel">Hotel</a></li> --}}
                 <!-- mengapa data hotel not found?
         karena pada saat routing data yang di panggil tidak ada pada routing -->
-                <li><a href="http://127.0.0.1:8000/promo">Promo Ramadhan</a></li>
+                {{-- <li><a href="http://127.0.0.1:8000/promo">Promo Ramadhan</a></li> --}}
+                    <li><a href="{{ route('hotels.index') }}" class="">Manage Hotels</a></li>
+                    <li><a href="{{ route('products.index') }}" class="">Manage Products</a></li>
+                    <li><a href="{{ route('reportShowHotel') }}" class="">View Available Hotel Rooms</a></li>
+                    <li><a href="{{ route('avgPriceByHotelType') }}" class="">View Average Price by Hotel Type</a></li>
+                </div>
             </ul>
         </nav>
     </header>
