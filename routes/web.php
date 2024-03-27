@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +46,8 @@ Route::resource('products',ProductController::class);
 
 Route::get('report/availableHotelRooms',[HotelController::class,'availableHotelRooms'])->name('reportShowHotel');
 Route::get('report/avgPriceByHotelType', [HotelController::class,'avgPriceByHotelType'])->name('avgPriceByHotelType');
+
+Route::get('/daftar-barang', [BarangController::class,'index'])->name('daftarBarang');
+Route::get('/jumlah-barang/{category?}', [KategoriController::class,'jumlahBarang'])->name('jumlahBarang');
+
 

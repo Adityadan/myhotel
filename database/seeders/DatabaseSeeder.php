@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             HotelSeeder::class,
             ProductSeeder::class,
+            KategoriSeeder::class,
+            BarangSeeder::class,
         ]);
     }
 }

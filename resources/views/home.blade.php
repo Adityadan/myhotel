@@ -63,6 +63,8 @@
                     <li><a href="{{ route('products.index') }}" class="">Manage Products</a></li>
                     <li><a href="{{ route('reportShowHotel') }}" class="">View Available Hotel Rooms</a></li>
                     <li><a href="{{ route('avgPriceByHotelType') }}" class="">View Average Price by Hotel Type</a></li>
+                    <li><a href="{{ route('daftarBarang') }}" class="">List Barang</a></li>
+                    {{-- <li><a href="{{ route('jumlahBarang') }}" class="">List Kategori</a></li> --}}
                 </div>
             </ul>
         </nav>
