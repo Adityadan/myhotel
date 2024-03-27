@@ -19,13 +19,19 @@ class BarangSeeder extends Seeder
                 'nama' => 'Barang A',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'kategori_id' => '1',
+                'kategori_id' => 1,
             ], [
                 'id' => 2,
                 'nama' => 'Barang B',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'kategori_id' => '2',
+                'kategori_id' => 2,
+            ],[
+                'id' => 3,
+                'nama' => 'Barang C',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'kategori_id' => 2,
             ]
         ]);
     }

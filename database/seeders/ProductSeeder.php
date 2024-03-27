@@ -16,18 +16,29 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert([
             [
                 'id' => 1,
-                'name' => 'Single type room',
+                'name' => 'Room 1',
+                'available_room'=>3,
                 'price'=> 10000,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'hotel_id' => 1
-            ], /* [
+            ],[
                 'id' => 2,
-                'name' => 'double type room',
+                'name' => 'Room 2',
+                'available_room'=>4,
+                'price'=> 30000,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'hotel_id' => 2
+            ],[
+                'id' => 3,
+                'name' => 'Room 3',
+                'available_room'=>2,
                 'price'=> 20000,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ] */
+                'hotel_id' => 1
+            ],
         ]);
     }
 }
