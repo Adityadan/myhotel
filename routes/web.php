@@ -50,4 +50,8 @@ Route::get('report/avgPriceByHotelType', [HotelController::class,'avgPriceByHote
 Route::get('/daftar-barang', [BarangController::class,'index'])->name('daftarBarang');
 Route::get('/jumlah-barang/{category?}', [KategoriController::class,'jumlahBarang'])->name('jumlahBarang');
 
+Route::view('ajaxExample', 'hotel.ajax');
+Route::post("/hotel/showInfo",[HotelController::class, 'showInfo'])->name("hotels.showInfo");
+Route::post('/hotel/showProducts',[HotelController::class,'showProducts'])->name('hotel.showProducts');
+
 

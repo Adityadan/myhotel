@@ -109,4 +109,33 @@ class HotelController extends Controller
             ->get();
         return view('hotel.avgPriceByHotelType', compact('rs'));
     }
+
+    public function list_hotels()
+    {
+        $data = Hotel::all();
+        return view('hotel.list_hotel', compact('data'));
+    }
+
+    public function showInfo()
+    {
+        $result = Hotel::join('products as p', 'hotels.id', "=", 'p.hotel_id')->orderBy('p.price', 'DESC')
+            ->select('hotels.name')->first();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => "<div class='alert alert-info'>
+        Did you know? <br>The most expensive product is " . $result->name . "</div>"
+        ), 200);
+    }
+
+    public function showProducts()
+    {
+        $hotel=Hotel::find($_POST['hotel_id']);
+        $nama=$hotel->name;
+        $data=$hotel->products;
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('hotel.showProducts',compact('nama','data'))->render()
+        ),200);
+    }
+
 }
