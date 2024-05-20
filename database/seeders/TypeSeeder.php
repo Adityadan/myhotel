@@ -14,11 +14,10 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         DB::table('types')->insert([
-            [
-                'id' => 1,
-                'name' => 'inn'
-            ],
-            ['id' => 2, 'name' => 'Resort']
-        ]);
+            ['name' => 'Inn'],
+            ['name' => 'Resort'],
+            ['name' => 'Villa'],
+            ['name' => 'Apartment']
+       ]);
     }
 }

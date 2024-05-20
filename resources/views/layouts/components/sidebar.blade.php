@@ -75,6 +75,20 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="icon-puzzle"></i>
+                    <span class="title">Transactions</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="{{ route('transaction.index') }}">
+                            <i class="icon-anchor"></i>
+                            List Transaksi</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

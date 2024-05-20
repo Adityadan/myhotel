@@ -4,6 +4,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,5 +54,8 @@ Route::get('/jumlah-barang/{category?}', [KategoriController::class,'jumlahBaran
 Route::view('ajaxExample', 'hotel.ajax');
 Route::post("/hotel/showInfo",[HotelController::class, 'showInfo'])->name("hotels.showInfo");
 Route::post('/hotel/showProducts',[HotelController::class,'showProducts'])->name('hotel.showProducts');
+
+Route::resource('transaction',TransactionController::class);
+Route::post('transaction/showDataAjax/', [TransactionController::class, 'showAjax'])->name('transaction.showAjax');
 
 
