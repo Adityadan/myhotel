@@ -66,12 +66,7 @@
                     <li>
                         <a href="{{ route('products.index') }}">
                             <i class="icon-anchor"></i>
-                            Manage Products</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('daftarBarang') }}">
-                            <i class="icon-book-open"></i>
-                            List Barang</a>
+                            List Products</a>
                     </li>
                 </ul>
             </li>
@@ -86,6 +81,35 @@
                         <a href="{{ route('transaction.index') }}">
                             <i class="icon-anchor"></i>
                             List Transaksi</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="icon-puzzle"></i>
+                    <span class="title">Types</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="{{ route('type.index') }}">
+                            <i class="icon-anchor"></i>
+                            List Types</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript:;">
+                    <i class="icon-puzzle"></i>
+                    <span class="title">Customer</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="{{ route('customer.index') }}">
+                            <i class="icon-anchor"></i>
+                            List Customer</a>
                     </li>
                 </ul>
             </li>

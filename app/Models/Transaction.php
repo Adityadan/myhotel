@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Transaction extends Model
 {
     use HasFactory;
+    protected $fillable = ['customer_id', 'user_id', 'transaction_date'];
 
     /**
      * Get the user that owns the Transaction
@@ -38,6 +39,7 @@ class Transaction extends Model
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'product_transaction', 'transaction_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'product_transaction', 'transaction_id', 'product_id')
+            ->withPivot('quantity', 'subtotal');
     }
 }

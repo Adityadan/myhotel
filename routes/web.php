@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +46,8 @@ Route::get('/promo/{promo}', function ($promo='Promo-Ramadhan') {
 
 Route::resource('hotels',HotelController::class);
 Route::resource('products',ProductController::class);
+Route::post('products/showDataAjax/', [ProductController::class, 'showAjax'])->name('products.showAjax');
+
 
 Route::get('report/availableHotelRooms',[HotelController::class,'availableHotelRooms'])->name('reportShowHotel');
 Route::get('report/avgPriceByHotelType', [HotelController::class,'avgPriceByHotelType'])->name('avgPriceByHotelType');
@@ -57,5 +61,10 @@ Route::post('/hotel/showProducts',[HotelController::class,'showProducts'])->name
 
 Route::resource('transaction',TransactionController::class);
 Route::post('transaction/showDataAjax/', [TransactionController::class, 'showAjax'])->name('transaction.showAjax');
+
+Route::resource('type', TypeController::class);
+
+Route::resource('customer', CustomerController::class);
+
 
 

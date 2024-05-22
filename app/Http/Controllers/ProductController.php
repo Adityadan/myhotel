@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,17 +14,24 @@ class ProductController extends Controller
     public function index()
     {
         $rs=Product::all();
-
         return view('product.index',compact('rs'));
 
     }
-
+    public function showAjax(Request $request)
+    {
+        $id = ($request->get('id'));
+        $data = Product::find($id);
+        return response()->json(array(
+            'msg'=> view('barang.showModal', compact('data'))->render()
+        ), 200);
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $hotel = Hotel::all();
+        return view('product.formcreate', compact('hotel'));
     }
 
     /**
@@ -31,6 +39,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $product = new Product();
+        $product->name = $request->get('name');
+        $product->price = $request->get('price');
+        $product->available_room = $request->get('available_room');
+        $product->hotel_id = $request->get('hotel_id');
+        $product->save();
+
+        return redirect()->route('products.index')->with('status', 'Horray!, Your transaction is successfully recorded!');
 
     }
 

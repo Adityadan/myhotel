@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Customer::all();
+        $types = Type::all();
 
-        return view('customer.index', compact('data'));
+        return view('type.index', compact('types'));
     }
 
     /**
@@ -22,7 +22,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.formcreate');
+        return view('type.formcreate');
+
     }
 
     /**
@@ -30,18 +31,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = new Customer();
-        $customer->name = $request->get('name');
-        $customer->address = $request->get('address');
-        $customer->save();
+        $data = new Type();
+        $data->name = $request->get("type_name");
+        $data->save();
 
-        return redirect()->route('customer.index')->with('status', 'Horray!, Your data is successfully recorded!');
+        return redirect()->route('type.index')->with('status','Horray!, Your data is successfully recorded !');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(Type $type)
     {
         //
     }
@@ -49,7 +49,7 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Customer $customer)
+    public function edit(Type $type)
     {
         //
     }
@@ -57,7 +57,7 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, Type $type)
     {
         //
     }
@@ -65,7 +65,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(Type $type)
     {
         //
     }

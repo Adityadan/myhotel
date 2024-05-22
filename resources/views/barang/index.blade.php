@@ -1,37 +1,57 @@
+@extends('layouts.main')
 
-<html lang="en">
-<head>
-  <title>List Barang</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-{{-- @dd($barangs->toArray()) --}}
-<div class="container">
-  <h2>List Barang</h2>
-   <table class="table">
-    <thead>
-      <tr>
-        <th>ID Barang</th>
-        <th>Nama Barang</th>
-      </tr>
-    </thead>
-    <tbody>
-        @foreach ($barangs as $r )
-          <tr>
-            <td>{{$r->id}}</td>
-            <td>{{$r->nama}}</td>
-          </tr>
+@section('content')
+    <div class="container">
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
 
-        @endforeach
+        <h2>List Barang</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($barangs as $barang)
+                    <tr>
+                        <td>{{ $barang->id }}</td>
+                        <td>{{ $barang->nama }}</td>
+                        <td>
+                            <a class="btn btn-default" data-toggle="modal" href="#myModal"
+                               onclick="getDetailData({{ $barang->id }});">Lihat Detail</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-wide">
+                <div class="modal-content" id="msg">
+                    <!--loading animated gif can put here-->
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
 
-    </tbody>
-  </table>
-</div>
-
-</body>
-</html>
+@section('scripts')
+    <script>
+        function getDetailData(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('products.showAjax') }}',
+                data: '_token= <?php echo csrf_token(); ?> &id=' + id,
+                success: function(data) {
+                    $("#msg").html(data.msg);
+                }
+            });
+        }
+    </script>
+@endsection

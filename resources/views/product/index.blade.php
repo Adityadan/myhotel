@@ -1,114 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Album example for Bootstrap</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Your custom styles here */
-    </style>
-</head>
-
-<body>
-
-    {{-- <header>
-  <div class="collapse bg-dark" id="navbarHeader">
+@section('content')
     <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">About</h4>
-          <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="navbar navbar-dark bg-dark box-shadow">
-    <div class="container d-flex justify-content-between">
-      <a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-        <strong>Album</strong>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
-</header> --}}
-
-    <main role="main">
-
-        <section class="jumbotron text-center">
-            <div class="container">
-                <h1 class="jumbotron-heading">Product</h1>
-                <p class="lead text-muted">Album Product.</p>
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
             </div>
-        </section>
+        @endif
+        <a class="btn btn-success" href="{{ route('products.create') }}">Tambah</a>
 
-        <div class="album py-5 bg-light">
-            <div class="container">
+        <h2>List Product</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Product</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Available Room</th>
+                    <th>ID Hotel</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($rs as $barang)
+                    <tr>
+                        <td>{{ $barang->id }}</td>
+                        <td>{{ $barang->name }}</td>
+                        <td>{{ $barang->price }}</td>
+                        <td>{{ $barang->available_room }}</td>
+                        <td>{{ $barang->hotel_id }}</td>
+                        <td>
+                            <img src="{{ asset('images/' . $barang->image) }}" alt="Hotel Image"
+                                style="max-width: 100px; max-height: 100px;">
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-                <div class="row">
-                    @foreach ($rs as $r)
-                        <div class="col-md-4">
-                            <div class="card mb-4 box-shadow">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $r->name }}</h5>
-                                    <p class="card-text">Price: Rp.{{ number_format($r->price, 2) }}</p>
-                                    <p class="card-text">Created At: {{ $r->created_at }}</p>
-                                    <p class="card-text">Updated At: {{ $r->updated_at }}</p>
-                                    <p class="card-text">Hotel ID: {{ $r->hotel_id }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="{{ route('products.show', ['product' => $r->id]) }}"
-                                                class="btn btn-sm btn-outline-secondary">View</a>
-                                            <button type="button"
-                                                class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-wide">
+                <div class="modal-content" id="msg">
+                    <!--loading animated gif can put here-->
                 </div>
             </div>
         </div>
+    </div>
+@endsection
 
-    </main>
-
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-            <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-            <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a
-                    href="https://getbootstrap.com/docs/4.0/getting-started/introduction/">getting started guide</a>.
-            </p>
-        </div>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+@section('scripts')
+    <script>
+        function getDetailData(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('products.showAjax') }}',
+                data: '_token= <?php echo csrf_token(); ?> &id=' + id,
+                success: function(data) {
+                    $("#msg").html(data.msg);
+                }
+            });
+        }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"
-        integrity="sha384-KFC4+0PBtyWi6kHpjQVeDzpD+pFT35WZ/UJksdxXvjlK+v3vXu1fJI0F1z0VbZ8e" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-
-</body>
-
-</html>
+@endsection
