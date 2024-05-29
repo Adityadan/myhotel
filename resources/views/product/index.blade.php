@@ -19,6 +19,7 @@
                     <th>Available Room</th>
                     <th>ID Hotel</th>
                     <th>Image</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,16 @@
                         <td>
                             <img src="{{ asset('images/' . $barang->image) }}" alt="Hotel Image"
                                 style="max-width: 100px; max-height: 100px;">
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="{{ route('products.edit', $barang->id) }}">Edit</a>
+                            <form method="POST" action="{{ route('products.destroy', $barang->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="delete" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure to delete {{ $barang->id }} - {{ $barang->name }} ? ');">
+
+                            </form>
                         </td>
                     </tr>
                 @endforeach

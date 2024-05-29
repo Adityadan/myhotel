@@ -65,7 +65,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+
+        $data = $product;
+        $hotels = Hotel::all();
+
+        return view('product.formedit', compact('data','hotels'));
     }
 
     /**
@@ -73,7 +77,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->name = $request->get('name');
+        $product->price = $request->get('price');
+        $product->available_room = $request->get('available_room');
+        $product->hotel_id = $request->get('hotel_id');
+        $product->save();
+
+        return redirect()->route('products.index')->with('status', 'Horray ! Your data is successfully updated!');
     }
 
     /**
@@ -81,6 +91,14 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        try {
+            $deletedData = $product;
+            $deletedData->delete();
+            return redirect()->route('products.index')->with('status', 'Horray ! Your data is successfully deleted !');
+        } catch (\PDOException $ex) {
+            // Failed to delete data, then show exception message
+            $msg = "Failed to delete data ! Make sure there is no related data before deleting it";
+            return redirect()->route('products.index')->with('status', $msg);
+        }
     }
 }

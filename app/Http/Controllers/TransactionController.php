@@ -80,7 +80,13 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        //
+        // dd($transaction);
+        $transaction = Transaction::with('products')->find($transaction->id);
+        $data = $transaction;
+        $customers = Customer::all();
+        $users = User::all();
+        $product = Product::all();
+        return view('transaction.formedit', compact('data','customers','users','product'));
     }
 
     /**
@@ -88,7 +94,24 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        //
+        $transaction->customer_id = $request->get('customer_id');
+        $transaction->user_id = $request->get('user_id');
+        $transaction->transaction_date = $request->get('transaction_date');
+        $transaction->save();
+
+        $productId = $request->get('product_id');
+        $quantity = $request->get('quantity');
+
+        $product = Product::findOrFail($productId);
+
+        $subtotal = $product->price * $quantity;
+
+        $transaction->products()->attach($productId, [
+            'quantity' => $quantity,
+            'subtotal' => $subtotal
+        ]);
+
+        return redirect()->route('transaction.index')->with('status', 'Horray!, Your transaction is successfully recorded!');
     }
 
     /**
@@ -96,6 +119,14 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        try {
+            $deletedData = $transaction;
+            $deletedData->delete();
+            return redirect()->route('transaction.index')->with('status', 'Horray ! Your data is successfully deleted !');
+        } catch (\PDOException $ex) {
+            // Failed to delete data, then show exception message
+            $msg = "Failed to delete data ! Make sure there is no related data before deleting it";
+            return redirect()->route('transaction.index')->with('status', $msg);
+        }
     }
 }

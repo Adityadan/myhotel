@@ -12,6 +12,7 @@
                 <th>Nama</th>
                 <th>Dibuat Pada</th>
                 <th>Diubah Terakhir</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,16 @@
                     <td>{{ $type->name }}</td>
                     <td>{{ $type->created_at }}</td>
                     <td>{{ $type->updated_at }}</td>
+                    <td>
+                        <a class="btn btn-warning" href="{{ route('type.edit', $type->id) }}">Edit</a>
+                        <form method="POST" action="{{ route('type.destroy', $type->id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="delete" class="btn btn-danger"
+                                onclick="return confirm('Are you sure to delete {{ $type->id }} - {{ $type->name }} ? ');">
+
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

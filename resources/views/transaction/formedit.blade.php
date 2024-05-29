@@ -7,7 +7,7 @@
             <div class="portlet">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-reorder"></i> Tambah Transaksi
+                        <i class="fa fa-reorder"></i> Edit Transaksi
                     </div>
                     <div class="tools">
                         <a href="" class="collapse"></a>
@@ -17,15 +17,16 @@
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <form method="POST" action="{{ route('transaction.store') }}">
+                    <form method="POST" action="{{ route('transaction.update',$data->id) }}">
                         @csrf
+                        @method('PUT')
                         <div class="form-body">
                             <div class="form-group">
                                 <label for="customer_id">Customer</label>
                                 <select class="form-control" name="customer_id" id="customer_id" required>
                                     <option value="" disabled selected>Pilih Customer</option>
                                     @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                        <option value="{{ $customer->id }}" {{$customer->id == $data->customer_id ? 'selected' : ''}}>{{ $customer->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block">Pilih Customer.</span>
@@ -35,7 +36,7 @@
                                 <select class="form-control" name="user_id" id="user_id" required>
                                     <option value="" disabled selected>Pilih Kasir</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}" {{ $user->id == $data->user_id ? 'selected' : ''}}>{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block">Pilih Kasir.</span>
@@ -48,13 +49,13 @@
                                         <option value="{{ $p->id }}">{{ $p->name }}</option>
                                     @endforeach
                                 </select>
-                                <span class="help-block">Pilih Kasir.</span>
+                                <span class="help-block">Pilih Produk.</span>
                             </div>
                             <div class="form-body">
                                 <div class="form-group">
                                     <label for="Nama">Jumlah</label>
                                     <input type="text" class="form-control" placeholder="Input Price" name="quantity"
-                                        id="exampleInputType" aria-describedby="nameHelp">
+                                        id="exampleInputType" aria-describedby="nameHelp" value="{{$data->price}}">
                                     <span class="help-block">
                                         Masukkan Jumlah Produk. </span>
                                 </div>

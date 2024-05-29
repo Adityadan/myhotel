@@ -23,7 +23,6 @@ class TypeController extends Controller
     public function create()
     {
         return view('type.formcreate');
-
     }
 
     /**
@@ -35,7 +34,7 @@ class TypeController extends Controller
         $data->name = $request->get("type_name");
         $data->save();
 
-        return redirect()->route('type.index')->with('status','Horray!, Your data is successfully recorded !');
+        return redirect()->route('type.index')->with('status', 'Horray!, Your data is successfully recorded !');
     }
 
     /**
@@ -51,7 +50,9 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        $data = $type;
+
+        return view('type.formedit', compact('data'));
     }
 
     /**
@@ -59,7 +60,10 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $updateData = $type;
+        $updateData->name = $request->type_name;
+        $updateData->save();
+        return redirect()->route('type.index')->with('status', 'Horray ! Your data is successfully updated !');
     }
 
     /**
@@ -67,6 +71,14 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        try {
+            $deletedData = $type;
+            $deletedData->delete();
+            return redirect()->route('type.index')->with('status', 'Horray ! Your data is successfully deleted !');
+        } catch (\PDOException $ex) {
+            // Failed to delete data, then show exception message
+            $msg = "Failed to delete data ! Make sure there is no related data before deleting it";
+            return redirect()->route('type.index')->with('status', $msg);
+        }
     }
 }
