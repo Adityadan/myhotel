@@ -16,13 +16,15 @@
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <form method="POST" action="{{route('type.update',$data->id)}}">
+                    <form method="POST" action="{{ route('type.update', $data->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="form-body">
                             <div class="form-group">
                                 <label for="Nama">Nama</label>
-                                <input type="text" class="form-control" value="{{$data->name}}" placeholder="Masukkan Nama Tipe" name="type_name" id="exampleInputType" aria-describedby="nameHelp" >
+                                <input type="text" class="form-control" value="{{ $data->name }}"
+                                    placeholder="Masukkan Nama Tipe" name="type_name" id="exampleInputType"
+                                    aria-describedby="nameHelp">
                                 <span class="help-block">
                                     Masukkan Nama Tipe Hotel. </span>
                             </div>
@@ -34,4 +36,8 @@
                     </form>
                 </div>
             </div>
-        @endsection
+        </div>
+    </div>
+@endsection
+
+

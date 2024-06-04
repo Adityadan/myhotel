@@ -14,7 +14,8 @@ class ProductController extends Controller
     public function index()
     {
         $rs=Product::all();
-        return view('product.index',compact('rs'));
+        $hotels = Hotel::all();
+        return view('product.index',compact('rs','hotels'));
 
     }
     public function showAjax(Request $request)
@@ -100,5 +101,24 @@ class ProductController extends Controller
             $msg = "Failed to delete data ! Make sure there is no related data before deleting it";
             return redirect()->route('products.index')->with('status', $msg);
         }
+    }
+
+    public function getEditForm(Request $request)
+    {
+        $id = $request->id;
+        $data = Product::find($id);
+        $hotels = Hotel::all();
+
+        return response()->json(array('status' => 'oke', 'msg' => view('product.getEditForm', compact('data','hotels'))->render()), 200);
+    }
+    public function deleteData(Request $request)
+    {
+        $id = $request->id;
+        $data = Product::find($id);
+        $data->delete();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'type data is removed !'
+        ), 200);
     }
 }
