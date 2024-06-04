@@ -15,8 +15,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $data = Transaction::all();
-        return view('transaction.index', compact('data'));
+        // $data = Transaction::all();
+        $transaction = Transaction::all();
+        $data = $transaction;
+        $customers = Customer::all();
+        $users = User::all();
+        $product = Product::all();
+        return view('transaction.index', compact('data','customers','users','product'));
     }
 
     public function showAjax(Request $request)
@@ -124,9 +129,28 @@ class TransactionController extends Controller
             $deletedData->delete();
             return redirect()->route('transaction.index')->with('status', 'Horray ! Your data is successfully deleted !');
         } catch (\PDOException $ex) {
-            // Failed to delete data, then show exception message
             $msg = "Failed to delete data ! Make sure there is no related data before deleting it";
             return redirect()->route('transaction.index')->with('status', $msg);
         }
+    }
+
+    public function getEditForm(Request $request)
+    {
+        $transaction = Transaction::with('products')->find($request->id);
+        $data = $transaction;
+        $customers = Customer::all();
+        $users = User::all();
+        $product = Product::all();
+        return response()->json(array('status' => 'oke', 'msg' => view('type.getEditForm', compact('data','customers','users','product'))->render()), 200);
+    }
+    public function deleteData(Request $request)
+    {
+        $id = $request->id;
+        $data = Transaction::find($id);
+        $data->delete();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'type data is removed !'
+        ), 200);
     }
 }

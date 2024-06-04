@@ -47,6 +47,8 @@ Route::get('/promo/{promo}', function ($promo='Promo-Ramadhan') {
 Route::resource('hotels',HotelController::class);
 Route::resource('products',ProductController::class);
 Route::post('products/showDataAjax/', [ProductController::class, 'showAjax'])->name('products.showAjax');
+Route::post('customproducts/getEditForm',[ProductController::class,'getEditForm'])->name('products.getEditForm');
+Route::post('customproducts/deleteData',[ProductController::class,'deleteData'])->name('products.deleteData');
 
 
 Route::get('report/availableHotelRooms',[HotelController::class,'availableHotelRooms'])->name('reportShowHotel');
@@ -61,10 +63,21 @@ Route::post('/hotel/showProducts',[HotelController::class,'showProducts'])->name
 
 Route::resource('transaction',TransactionController::class);
 Route::post('transaction/showDataAjax/', [TransactionController::class, 'showAjax'])->name('transaction.showAjax');
+Route::post('customtransaction/getEditForm',[TransactionController::class,'getEditForm'])->name('transaction.getEditForm');
+Route::post('customtransaction/getEditFormB',[TransactionController::class,'getEditFormB'])->name('transaction.getEditFormB');
+Route::post('customtransaction/saveDataTD',[TransactionController::class,'saveDataTD'])->name('transaction.saveDataTD');
+Route::post('customtransaction/deleteData',[TransactionController::class,'deleteData'])->name('transaction.deleteData');
 
 Route::resource('type', TypeController::class);
+Route::post('customtype/getEditForm',[TypeController::class,'getEditForm'])->name('type.getEditForm');
+Route::post('customtype/getEditFormB',[TypeController::class,'getEditFormB'])->name('type.getEditFormB');
+Route::post('customtype/saveDataTD',[TypeController::class,'saveDataTD'])->name('type.saveDataTD');
+Route::post('customtype/deleteData',[TypeController::class,'deleteData'])->name('type.deleteData');
+
 
 Route::resource('customer', CustomerController::class);
+Route::post('customcustomer/getEditForm',[CustomerController::class,'getEditForm'])->name('customer.getEditForm');
+Route::post('customcustomer/deleteData',[CustomerController::class,'deleteData'])->name('customer.deleteData');
 
 
 

@@ -459,6 +459,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN FOOTER -->
     @include('layouts.components.footer')
     @yield('scripts')
+    {{-- @yield('js') --}}
     <!-- END FOOTER -->
 </body>
 <!-- END BODY -->
