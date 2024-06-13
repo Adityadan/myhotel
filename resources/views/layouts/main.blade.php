@@ -427,8 +427,16 @@ License: You must have a valid license purchased only from themeforest(the above
                         <li class="divider">
                         </li>
                         <li>
-                            <a href="login.html"><i class="fa fa-key"></i> Log Out</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa fa-key"></i> Log Out
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
                         </li>
+
                     </ul>
                 </li>
                 <!-- END USER LOGIN DROPDOWN -->
