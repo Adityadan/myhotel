@@ -24,7 +24,6 @@ class ProductController extends Controller
             }
             $r['filenames'] = $filenames;
         }
-        dd($rs->toArray());
         return view('product.index', compact('rs'));
     }
     public function showAjax(Request $request)
