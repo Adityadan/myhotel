@@ -34,8 +34,18 @@
                         <td>{{ $barang->available_room }}</td>
                         <td>{{ $barang->hotel_id }}</td>
                         <td>
-                            <img src="{{ asset('images/' . $barang->image) }}" alt="Hotel Image"
-                                style="max-width: 100px; max-height: 100px;">
+                            {{-- <img src="{{ asset('images/' . $barang->image) }}" alt="Hotel Image"
+                                style="max-width: 100px; max-height: 100px;"> --}}
+                                <td>
+                                    @if($rs->filenames)
+                                       @foreach ($rs->filenames as $filename)
+                                          <img src="{{asset('product/'.$rs->id.'/'.$filename)}}"/><br>
+                                       @endforeach
+                                    @endif
+                                    <a href="{{ url('product/uploadPhoto/'.$rs->id) }}">
+                                       <button class='btn btn-xs btn-default'>upload</button></a>
+                                 </td>
+
                         </td>
                         <td>
                             <a class="btn btn-warning" href="{{ route('products.edit', $barang->id) }}">Edit</a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -13,17 +14,25 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $rs=Product::all();
-        $hotels = Hotel::all();
-        return view('product.index',compact('rs','hotels'));
-
+        $rs = Product::all();
+        foreach ($rs as $r) {
+            $directory = storage_path("app/public/product/" . $r->id);
+            $files = File::files($directory);
+            $filenames = [];
+            foreach ($files as $file) {
+                $filenames[] = $file->getFilename();
+            }
+            $r['filenames'] = $filenames;
+        }
+        dd($rs->toArray());
+        return view('product.index', compact('rs'));
     }
     public function showAjax(Request $request)
     {
         $id = ($request->get('id'));
         $data = Product::find($id);
         return response()->json(array(
-            'msg'=> view('barang.showModal', compact('data'))->render()
+            'msg' => view('barang.showModal', compact('data'))->render()
         ), 200);
     }
     /**
@@ -48,7 +57,6 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()->route('products.index')->with('status', 'Horray!, Your transaction is successfully recorded!');
-
     }
 
     /**
@@ -70,7 +78,7 @@ class ProductController extends Controller
         $data = $product;
         $hotels = Hotel::all();
 
-        return view('product.formedit', compact('data','hotels'));
+        return view('product.formedit', compact('data', 'hotels'));
     }
 
     /**
@@ -109,7 +117,7 @@ class ProductController extends Controller
         $data = Product::find($id);
         $hotels = Hotel::all();
 
-        return response()->json(array('status' => 'oke', 'msg' => view('product.getEditForm', compact('data','hotels'))->render()), 200);
+        return response()->json(array('status' => 'oke', 'msg' => view('product.getEditForm', compact('data', 'hotels'))->render()), 200);
     }
     public function deleteData(Request $request)
     {

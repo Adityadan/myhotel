@@ -1,9 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-    <h3 class="page-title">
-        Hotel
-    </h3>
+    <h3 class="page-title">Hotel</h3>
+
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -18,54 +17,57 @@
         <div class="page-toolbar">
             <div id="dashboard-report-range" class="pull-right tooltips btn btn-fit-height btn-primary" data-container="body"
                 data-placement="bottom" data-original-title="Change dashboard date range">
-                <i class="icon-calendar"></i>&nbsp; <span class="thin uppercase visible-lg-inline-block"></span>&nbsp;
+                <i class="icon-calendar"></i>
+                <span class="thin uppercase visible-lg-inline-block"></span>
                 <i class="fa fa-angle-down"></i>
             </div>
         </div>
-
-        <!-- END PAGE HEADER-->
     </div>
 
-    <div class="container">
+    <div class="container mt-4">
+        <a class="btn btn-primary mb-3" data-toggle="modal" href="#disclaimer">Disclaimer</a>
 
-        <a class="btn btn-primary" data-toggle="modal" href="#disclaimer">Disclaimer</a>
-        <table class="table">
-            <thead>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Address</th>
                     <th>City</th>
+                    <th>Upload Images</th>
                     <th>Foto</th>
-                    <td>Room</td>
-                    <td>Detail</td>
+                    <th>Room</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
-
                 @foreach ($rs as $r)
                     <tr>
                         <td>
-                            <a href="/hotels/{{ $r->id }}">
-                                {{ $r->name }}
-                            </a>
+                            <a href="/hotels/{{ $r->id }}">{{ $r->name }}</a>
                         </td>
                         <td>{{ $r->address }}</td>
                         <td>{{ $r->city }}</td>
                         <td>
+                            <img height="100px" src="{{ asset('/logo/' . $r->id . '.jpg') }}" class="img-thumbnail" />
+                            <br>
+                            <a href="{{ url('hotel/uploadLogo/' . $r->id) }}" class="btn btn-xs btn-default mt-2">Upload</a>
+                        </td>
+                        <td>
                             <a href="#detail_{{ $r->id }}" data-toggle="modal">
-                                <img height="50px" src="{{ asset('images/' . $r->image) }}" />
+                                <img height="50px" src="{{ asset('images/' . $r->image) }}" class="img-thumbnail" />
                             </a>
-                            <div class="modal fade" id="detail_{{ $r->id }}" tabindex="-1" role="basic"
+                            <div class="modal fade" id="detail_{{ $r->id }}" tabindex="-1" role="dialog"
                                 aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">{{ $r->name }}</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                            <img src="{{ asset('images/' . $r->image) }}" />
+                                            <img src="{{ asset('images/' . $r->image) }}" class="img-fluid" />
                                         </div>
-
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default"
                                                 data-dismiss="modal">Close</button>
@@ -73,54 +75,42 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
+                            <a href="{{ url('hotel/uploadPhoto/' . $r->id) }}"
+                                class="btn btn-xs btn-default mt-2">Upload</a>
                         </td>
                         <td>
                             @foreach ($r->products as $p)
-                                - {{ $p->name }} ({{ $p->price }})<br>
+                                <div>- {{ $p->name }} ({{ $p->price }})</div>
                             @endforeach
                         </td>
                         <td>
-                            <a class='btn btn-xs btn-info' data-toggle='modal'
-                                data-target='#myModal'onclick='showProducts({{ $r->id }})'>Detail</a>
+                            <a href="#" class="btn btn-xs btn-info" data-toggle="modal" data-target="#myModal"
+                                onclick="showProducts({{ $r->id }})">Detail</a>
                         </td>
                     </tr>
                 @endforeach
-
-
             </tbody>
         </table>
-        <br>
 
-        <div class="row">
+        <div class="row mt-4">
             @foreach ($rs as $r)
-                <div class="col-sm-3"
-                    style="border:1px solid #999;padding:10px;margin:10px;text-align:center;
-            border-radius:10px">
-                    <img height="100px" src="{{ asset('images/' . $r->image) }}" />
+                <div class="col-sm-3 mb-3 text-center" style="border: 1px solid #999; padding: 10px; border-radius: 10px;">
+                    <img height="100px" src="{{ asset('images/' . $r->image) }}" class="img-thumbnail" />
                     <br>{{ $r->name }}
                     <br>{{ $r->address }}, {{ $r->city }}
                 </div>
             @endforeach
         </div>
-
     </div>
 
-
-
-
-    <div class="modal fade" id="disclaimer" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal fade" id="disclaimer" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">DISCLAIMER</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    Pictures shown are for illustration purpose only. Actual product may vary due to product
-                    enhancement.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -129,10 +119,9 @@
         </div>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
-        <div class="modal-dialog modal-wide">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content" id="showproducts">
-                <!--loading animated gif can put here-->
             </div>
         </div>
     </div>

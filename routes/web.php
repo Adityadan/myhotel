@@ -47,6 +47,13 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::resource('hotels', HotelController::class);
+    Route::post("/hotel/showInfo", [HotelController::class, 'showInfo'])->name("hotels.showInfo");
+    Route::post('/hotel/showProducts', [HotelController::class, 'showProducts'])->name('hotel.showProducts');
+    Route::get('hotel/uploadLogo/{hotel_id}', [HotelController::class, 'uploadLogo']);
+    Route::post('hotel/simpanLogo', [HotelController::class, 'simpanLogo']);
+    Route::get('hotel/uploadPhoto/{hotel_id}', [HotelController::class, 'uploadPhoto']);
+    Route::post('hotel/simpanPhoto', [HotelController::class, 'simpanPhoto']);
+
     Route::resource('products', ProductController::class);
     Route::post('products/showDataAjax/', [ProductController::class, 'showAjax'])->name('products.showAjax');
     Route::post('customproducts/getEditForm', [ProductController::class, 'getEditForm'])->name('products.getEditForm');
@@ -57,10 +64,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/daftar-barang', [BarangController::class, 'index'])->name('daftarBarang');
     Route::get('/jumlah-barang/{category?}', [KategoriController::class, 'jumlahBarang'])->name('jumlahBarang');
-
     Route::view('ajaxExample', 'hotel.ajax');
-    Route::post("/hotel/showInfo", [HotelController::class, 'showInfo'])->name("hotels.showInfo");
-    Route::post('/hotel/showProducts', [HotelController::class, 'showProducts'])->name('hotel.showProducts');
 
     Route::resource('transaction', TransactionController::class);
     Route::post('transaction/showDataAjax/', [TransactionController::class, 'showAjax'])->name('transaction.showAjax');
@@ -78,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customer', CustomerController::class);
     Route::post('customcustomer/getEditForm', [CustomerController::class, 'getEditForm'])->name('customer.getEditForm');
     Route::post('customcustomer/deleteData', [CustomerController::class, 'deleteData'])->name('customer.deleteData');
+
     Route::post('/logout', function () {
         Auth::logout();
         return redirect('/');

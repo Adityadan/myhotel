@@ -129,13 +129,45 @@ class HotelController extends Controller
 
     public function showProducts()
     {
-        $hotel=Hotel::find($_POST['hotel_id']);
-        $nama=$hotel->name;
-        $data=$hotel->products;
+        $hotel = Hotel::find($_POST['hotel_id']);
+        $nama = $hotel->name;
+        $data = $hotel->products;
         return response()->json(array(
-            'status'=>'oke',
-            'msg'=>view('hotel.showProducts',compact('nama','data'))->render()
-        ),200);
+            'status' => 'oke',
+            'msg' => view('hotel.showProducts', compact('nama', 'data'))->render()
+        ), 200);
+    }
+    public function uploadLogo(Request $request)
+    {
+        $hotel_id = $request->hotel_id;
+        $hotel = Hotel::find($hotel_id);
+        return view('hotel.formUploadLogo', compact('hotel'));
+    }
+    public function simpanLogo(Request $request)
+    {
+        $file = $request->file("file_logo");
+        $folder = 'logo';
+        $filename = $request->hotel_id . ".jpg";
+        $file->move($folder, $filename);
+        return redirect()->route('hotels.index')->with('status', 'logo terupload');
     }
 
+    public function uploadPhoto(Request $request)
+    {
+        $hotel_id = $request->hotel_id;
+        $hotel = Hotel::find($hotel_id);
+        return view('hotel.formUploadPhoto', compact('hotel'));
+    }
+
+    public function simpanPhoto(Request $request)
+    {
+        $file = $request->file("file_photo");
+        $folder = 'images';
+        $filename = time() . "_" . $file->getClientOriginalName();
+        $file->move($folder, $filename);
+        $hotel = Hotel::find($request->hotel_id);
+        $hotel->image = $filename;
+        $hotel->save();
+        return redirect()->route('hotels.index')->with('status', 'photo terupload');
+    }
 }
